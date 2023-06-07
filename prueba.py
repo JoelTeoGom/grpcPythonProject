@@ -1,7 +1,7 @@
-import prueba
+import redis
 
 # Crear una instancia del cliente Redis
-redis_client = prueba.Redis(host='localhost', port=6379, db=0)
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
 # Obtener todas las claves
 claves = redis_client.keys('*')
@@ -10,5 +10,5 @@ claves = redis_client.keys('*')
 valores = redis_client.mget(claves)
 
 # Imprimir los valores
-for valor in valores:
-    print(valor)
+for clave, valor in zip(claves, valores):
+    print(f'Clave: {clave}, Valor: {valor}')

@@ -6,15 +6,14 @@ import concurrent.futures
 import time
 from concurrent import futures
 from meteo_utils import MeteoDataProcessor
-import prueba
+import redis
 import multiprocessing
-import prueba
 
 
 class ProcessorService:
     def __init__(self):
         self.processor = MeteoDataProcessor()
-        self.r = prueba.Redis(host='localhost', port=6379, db=0)
+        self.r = redis.Redis(host='localhost', port=6379, db=0)
         self.lock = multiprocessing.Lock()  
 
     def process_meteo_data(self, RawMeteoData):
