@@ -3,8 +3,9 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 
-// to compile
-// python3 -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. --pyi_out=. ./meteoServer.proto
+
+//python3 -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. --pyi_out=. ./meteoServer.proto
+
 
 message RawMeteoData {
   string id = 1;
@@ -19,17 +20,33 @@ message RawPollutionData {
   int64 timestamp = 3;
 }
 
+message WellnessResults {
+  double time = 1;
+  float avg = 2;
+  float desv = 3;
+}
+
+message PollutionResults {
+  double time = 1;
+  float avg = 2;
+  float desv = 3;
+}
+
+message Results {
+  WellnessResults wellness_results = 1;
+  PollutionResults pollution_results = 2;
+}
 
 service LoadBalancerService {
-  rpc SendMeteoData(RawMeteoData) returns (google.protobuf.Empty){}
-  rpc SendPollutionData(RawPollutionData) returns (google.protobuf.Empty){}
+  rpc SendMeteoData(RawMeteoData) returns (google.protobuf.Empty) {}
+  rpc SendPollutionData(RawPollutionData) returns (google.protobuf.Empty) {}
 }
 
 service ProcessService {
-    rpc ProcessMeteoData(RawMeteoData) returns (google.protobuf.Empty){}
-    rpc ProcessPollutionData(RawPollutionData) returns (google.protobuf.Empty){}
+  rpc ProcessMeteoData(RawMeteoData) returns (google.protobuf.Empty) {}
+  rpc ProcessPollutionData(RawPollutionData) returns (google.protobuf.Empty) {}
 }
 
-service ProxyService {
-  
+service TerminalService {
+  rpc SendResults(Results) returns (google.protobuf.Empty) {}
 }

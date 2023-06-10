@@ -18,16 +18,15 @@ class ProcessorService:
 
     def process_meteo_data(self, RawMeteoData):
         wellness_data = self.processor.process_meteo_data(RawMeteoData)
-        
         with self.lock:  
-            self.r.set(RawMeteoData.timestamp, wellness_data)
+            self.r.set(f'm{str(RawMeteoData.timestamp)}', wellness_data)
         return 'Done'
 
     def process_pollution_data(self, RawPollutionData):
         pollution_data = self.processor.process_pollution_data(RawPollutionData)
         
         with self.lock: 
-            self.r.set(RawPollutionData.timestamp, pollution_data)
+            self.r.set(f'p{str(RawPollutionData.timestamp)}', pollution_data)
         return 'Done'
 
 processor_service = ProcessorService()
