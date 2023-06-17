@@ -36,8 +36,9 @@ class ProxyService:
         
         p_avg = mean(p_values) if p_values else 0
         m_avg = mean(m_values) if m_values else 0
-        p_std = stdev(p_values) if p_values else 0
-        m_std = stdev(m_values) if m_values else 0
+        p_std = stdev(p_values) if len(p_values) >= 2 else 0 #varianza necesita 2 valores por defecto sino da error
+        m_std = stdev(m_values) if len(m_values) >= 2 else 0
+        
         
         return p_avg, m_avg, p_std, m_std
 

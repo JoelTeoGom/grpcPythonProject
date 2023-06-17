@@ -9,7 +9,6 @@ from meteo_utils import MeteoDataProcessor
 import redis
 import multiprocessing
 
-
 class TerminalService:
     def send_results(self, results):
         print("Received results:")
