@@ -54,13 +54,10 @@ class ProxyService:
 
                     min_time = min(strip(keys)) + self.window_time
                     print('MIN_TIME:', min_time)
-
-                    # Create pollution results message
+                    
                     pollution_results = meteoServer_pb2.PollutionResults(time=min_time, avg=p_avg, desv=p_std)
-                    # Create wellness results message
                     wellness_results = meteoServer_pb2.WellnessResults(time=min_time, avg=m_avg, desv=m_std)
 
-                    # Send results to all terminals
                     for terminal_address in self.terminal_list:
                         channel_stub = grpc.insecure_channel(terminal_address)
                         server_terminal = meteoServer_pb2_grpc.TerminalServiceStub(channel_stub)
